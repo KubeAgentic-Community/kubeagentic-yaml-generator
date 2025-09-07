@@ -13,9 +13,7 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  Grid,
 } from '@mui/material';
-
 import { GitHub } from '@mui/icons-material';
 import YAML from 'js-yaml';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';

@@ -1,20 +1,18 @@
 import React from 'react';
-import { 
+import {
   Box,
   Button,
   Typography,
-  
+  Grid,
   Card,
   CardContent,
   Chip,
   Divider,
   Alert,
   Stack,
-  Grid,
 } from '@mui/material';
-
-import {  CloudDownload, ContentCopy, Refresh } from '@mui/icons-material';
-import {  FormData } from '../types';
+import { CloudDownload, ContentCopy, Refresh } from '@mui/icons-material';
+import { FormData } from '../types';
 
 interface ReviewStepProps {
   formData: FormData;
@@ -150,14 +148,14 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
           <Card variant="outlined">
             <CardContent>
               <Typography variant="h6" gutterBottom>
-                Deployment Instructions
+                Generate & Download YAML
               </Typography>
               
               <Alert severity="info" sx={{ mb: 2 }}>
                 Before deploying, make sure you have:
               </Alert>
               
-              <Box component="ol" sx={{ pl: 2 }}>
+              <Box component="ol" sx={{ pl: 2, mb: 3 }}>
                 <li>
                   <Typography variant="body2" sx={{ mb: 1 }}>
                     Created the API secret in your Kubernetes cluster:
@@ -193,8 +191,9 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
                   fullWidth
                   onClick={onGenerate}
                   startIcon={<Refresh />}
+                  size="large"
                 >
-                  Generate YAML
+                  Generate YAML Configuration
                 </Button>
                 
                 {generatedYAML && (
@@ -204,6 +203,7 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
                       fullWidth
                       onClick={onCopy}
                       startIcon={<ContentCopy />}
+                      size="large"
                     >
                       Copy to Clipboard
                     </Button>
@@ -213,6 +213,7 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
                       fullWidth
                       onClick={onDownload}
                       startIcon={<CloudDownload />}
+                      size="large"
                     >
                       Download YAML File
                     </Button>

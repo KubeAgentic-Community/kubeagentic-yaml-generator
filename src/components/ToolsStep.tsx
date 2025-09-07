@@ -1,9 +1,9 @@
 import React from 'react';
-import { 
+import {
   Box,
   Button,
   Typography,
-  
+  Grid,
   Card,
   CardContent,
   TextField,
@@ -11,15 +11,9 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Grid,
 } from '@mui/material';
-
-import {  ExpandMore, Add, Delete } from '@mui/icons-material';
-import {  FormData, Tool } from '../types';
+import { ExpandMore, Add, Delete } from '@mui/icons-material';
+import { FormData, Tool } from '../types';
 
 interface ToolsStepProps {
   formData: FormData;
