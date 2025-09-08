@@ -9,12 +9,13 @@ A modern web interface for generating KubeAgentic YAML configurations for Kubern
 - **Framework Selection**: Choose between Direct and LangGraph frameworks
 - **Tool Integration**: Define custom tools for your agents
 - **Resource Management**: Configure scaling and resource allocation
+- **Production Ready**: Generate complete production deployments with Services, Ingress, HPA, and more
 - **Real-time Preview**: See generated YAML as you configure
 - **Export Options**: Copy to clipboard or download YAML files
 
 ## 🌐 Live Demo
 
-Visit the live application at: [https://kubeagentic-community.github.io/kubeagentic-yaml-generator](https://kubeagentic-community.github.io/kubeagentic-yaml-generator)
+Visit the live application at: [https://yamlgenerator.kubeagentic.com](https://yamlgenerator.kubeagentic.com)
 
 ## 🛠️ Local Development
 
@@ -58,7 +59,8 @@ npm run deploy
 3. **Framework**: Choose between Direct (simple) or LangGraph (complex workflows)
 4. **Tools**: Define custom tools your agent can use (optional)
 5. **Resources**: Configure scaling, resource limits, and service type
-6. **Review & Generate**: Review your configuration and generate the final YAML
+6. **Production Config**: Select additional Kubernetes resources for production deployment
+7. **Review & Generate**: Review your configuration and generate the final YAML
 
 ## 🔧 Configuration Options
 
@@ -72,10 +74,21 @@ npm run deploy
 - **Direct**: Simple API calls for basic interactions
 - **LangGraph**: Complex multi-step workflows with conditional logic
 
+### Production Resources
+- **Service**: Network exposure and load balancing
+- **Ingress**: HTTP/HTTPS routing for external access
+- **Route**: OpenShift-specific routing
+- **HPA**: Horizontal Pod Autoscaler for auto-scaling
+- **PVC**: Persistent storage for data persistence
+- **NetworkPolicy**: Network security and traffic control
+- **ConfigMap & Secret**: Configuration and sensitive data management
+
 ### Resource Options
 - Replica scaling (1-10 instances)
 - Memory and CPU requests/limits
 - Service types (ClusterIP, NodePort, LoadBalancer)
+- Auto-scaling policies
+- Storage configuration
 
 ## 🤝 Contributing
 

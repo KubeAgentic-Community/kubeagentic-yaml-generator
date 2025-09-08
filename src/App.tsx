@@ -424,7 +424,7 @@ function App() {
           </Typography>
           <IconButton
             color="inherit"
-            href="https://github.com/KubeAgentic-Community/kubeagentic-yaml-generator"
+            href="https://yamlgenerator.kubeagentic.com"
             target="_blank"
             rel="noopener noreferrer"
           >
