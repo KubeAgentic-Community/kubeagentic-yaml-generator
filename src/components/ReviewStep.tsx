@@ -47,13 +47,32 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
     return framework === 'langgraph' ? 'success' : 'default';
   };
 
+  const getProductionResources = () => {
+    if (!formData.productionConfig) return [];
+    
+    const resources = [];
+    if (formData.productionConfig.createService) resources.push('Service');
+    if (formData.productionConfig.createIngress) resources.push('Ingress');
+    if (formData.productionConfig.createRoute) resources.push('Route (OpenShift)');
+    if (formData.productionConfig.createConfigMap) resources.push('ConfigMap');
+    if (formData.productionConfig.createSecret) resources.push('Secret');
+    if (formData.productionConfig.createDeployment) resources.push('Deployment');
+    if (formData.productionConfig.createHPA) resources.push('HPA');
+    if (formData.productionConfig.createPVC) resources.push('PVC');
+    if (formData.productionConfig.createNetworkPolicy) resources.push('NetworkPolicy');
+    
+    return resources;
+  };
+
+  const productionResources = getProductionResources();
+
   return (
     <Box>
       <Typography variant="h6" gutterBottom>
-        Review & Generate YAML
+        Review & Generate Complete YAML
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Review your configuration and generate the final YAML file for deployment.
+        Review your configuration and generate the complete YAML files for production deployment.
       </Typography>
 
       <Grid container spacing={3}>
@@ -125,7 +144,7 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
 
               <Divider sx={{ my: 2 }} />
 
-              <Box>
+              <Box sx={{ mb: 2 }}>
                 <Typography variant="subtitle2" gutterBottom>Resources & Scaling</Typography>
                 <Typography variant="body2">
                   <strong>Replicas:</strong> {formData.spec.replicas || 1}
@@ -140,6 +159,29 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
                   <strong>CPU:</strong> {formData.spec.resources?.requests?.cpu || '100m'} - {formData.spec.resources?.limits?.cpu || '200m'}
                 </Typography>
               </Box>
+
+              <Divider sx={{ my: 2 }} />
+
+              <Box>
+                <Typography variant="subtitle2" gutterBottom>Production Resources</Typography>
+                {productionResources.length > 0 ? (
+                  <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                    {productionResources.map((resource) => (
+                      <Chip 
+                        key={resource}
+                        label={resource} 
+                        color="success" 
+                        size="small" 
+                        variant="outlined"
+                      />
+                    ))}
+                  </Stack>
+                ) : (
+                  <Typography variant="body2" color="text.secondary">
+                    No additional production resources selected
+                  </Typography>
+                )}
+              </Box>
             </CardContent>
           </Card>
         </Grid>
@@ -148,40 +190,42 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
           <Card variant="outlined">
             <CardContent>
               <Typography variant="h6" gutterBottom>
-                Generate & Download YAML
+                Generate & Download Complete YAML
               </Typography>
               
               <Alert severity="info" sx={{ mb: 2 }}>
-                Before deploying, make sure you have:
+                This will generate a complete production-ready deployment including:
               </Alert>
               
-              <Box component="ol" sx={{ pl: 2, mb: 3 }}>
+              <Box component="ul" sx={{ pl: 2, mb: 3 }}>
                 <li>
                   <Typography variant="body2" sx={{ mb: 1 }}>
-                    Created the API secret in your Kubernetes cluster:
-                  </Typography>
-                  <Box component="pre" sx={{ 
-                    bgcolor: 'grey.100', 
-                    p: 1, 
-                    borderRadius: 1, 
-                    fontSize: '0.75rem',
-                    overflow: 'auto'
-                  }}>
-{`kubectl create secret generic ${formData.spec.apiSecretRef.name} \\
-  --from-literal=${formData.spec.apiSecretRef.key}=YOUR_API_KEY`}
-                  </Box>
-                </li>
-                <li>
-                  <Typography variant="body2" sx={{ mb: 1 }}>
-                    Installed the KubeAgentic operator in your cluster
+                    <strong>KubeAgentic Agent</strong> - Main AI agent configuration
                   </Typography>
                 </li>
-                <li>
-                  <Typography variant="body2" sx={{ mb: 1 }}>
-                    Applied the generated YAML configuration
-                  </Typography>
-                </li>
+                {productionResources.map((resource) => (
+                  <li key={resource}>
+                    <Typography variant="body2" sx={{ mb: 1 }}>
+                      <strong>{resource}</strong> - {resource === 'Service' ? 'Network exposure' : 
+                                                      resource === 'Ingress' ? 'HTTP/HTTPS routing' :
+                                                      resource === 'Route' ? 'OpenShift routing' :
+                                                      resource === 'HPA' ? 'Auto-scaling' :
+                                                      resource === 'PVC' ? 'Persistent storage' :
+                                                      resource === 'NetworkPolicy' ? 'Network security' :
+                                                      'Additional configuration'}
+                    </Typography>
+                  </li>
+                ))}
               </Box>
+
+              <Alert severity="warning" sx={{ mb: 2 }}>
+                Before deploying, make sure you have:
+                <Box component="ol" sx={{ pl: 2, mt: 1 }}>
+                  <li>Created the API secret in your Kubernetes cluster</li>
+                  <li>Installed the KubeAgentic operator</li>
+                  <li>Applied the generated YAML configuration</li>
+                </Box>
+              </Alert>
 
               <Divider sx={{ my: 2 }} />
 
@@ -193,7 +237,7 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
                   startIcon={<Refresh />}
                   size="large"
                 >
-                  Generate YAML Configuration
+                  Generate Complete YAML Configuration
                 </Button>
                 
                 {generatedYAML && (
@@ -215,7 +259,7 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
                       startIcon={<CloudDownload />}
                       size="large"
                     >
-                      Download YAML File
+                      Download Complete YAML
                     </Button>
                   </>
                 )}

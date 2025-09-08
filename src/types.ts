@@ -46,6 +46,64 @@ export interface LangGraphConfig {
   endpoints?: string[];
 }
 
+export interface IngressConfig {
+  enabled?: boolean;
+  host?: string;
+  path?: string;
+  tls?: {
+    enabled?: boolean;
+    secretName?: string;
+  };
+  annotations?: Record<string, string>;
+}
+
+export interface ServiceConfig {
+  enabled?: boolean;
+  type?: 'ClusterIP' | 'NodePort' | 'LoadBalancer';
+  port?: number;
+  targetPort?: number;
+  annotations?: Record<string, string>;
+}
+
+export interface RouteConfig {
+  enabled?: boolean;
+  host?: string;
+  path?: string;
+  tls?: {
+    enabled?: boolean;
+    termination?: 'edge' | 'passthrough' | 'reencrypt';
+  };
+  annotations?: Record<string, string>;
+}
+
+export interface ProductionConfig {
+  createService?: boolean;
+  createIngress?: boolean;
+  createRoute?: boolean;
+  serviceConfig?: ServiceConfig;
+  ingressConfig?: IngressConfig;
+  routeConfig?: RouteConfig;
+  createConfigMap?: boolean;
+  createSecret?: boolean;
+  createDeployment?: boolean;
+  createHPA?: boolean;
+  hpaConfig?: {
+    minReplicas?: number;
+    maxReplicas?: number;
+    targetCPUUtilizationPercentage?: number;
+  };
+  createPVC?: boolean;
+  pvcConfig?: {
+    size?: string;
+    storageClass?: string;
+  };
+  createNetworkPolicy?: boolean;
+  networkPolicyConfig?: {
+    ingress?: boolean;
+    egress?: boolean;
+  };
+}
+
 export interface AgentSpec {
   provider: 'openai' | 'gemini' | 'claude' | 'vllm';
   model: string;
@@ -77,4 +135,5 @@ export interface KubeAgenticAgent {
 export interface FormData {
   metadata: AgentMetadata;
   spec: AgentSpec;
+  productionConfig?: ProductionConfig;
 }
