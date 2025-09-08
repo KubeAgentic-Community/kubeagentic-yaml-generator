@@ -17,7 +17,6 @@ import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 import { FormData, KubeAgenticAgent } from './types';
 import Header from './components/layout/Header';
-import HeroSection from './components/layout/HeroSection';
 import Footer from './components/layout/Footer';
 import BasicInfoStep from './components/BasicInfoStep';
 import ProviderStep from './components/ProviderStep';
@@ -476,7 +475,6 @@ function App() {
       <CssBaseline />
       <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
         <Header />
-        <HeroSection />
 
         <Container maxWidth="lg" sx={{ mt: 6, mb: 6, flex: 1 }}>
           <Paper sx={{ p: 4, mb: 4 }}>

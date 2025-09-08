@@ -55,7 +55,7 @@ const Header: React.FC = () => {
                 fontSize: '1.5rem',
               }}
             >
-              KubeAgentic
+              KubeAgentic Home
             </Typography>
           </Box>
           
