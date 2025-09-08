@@ -10,16 +10,15 @@ import {
   Step,
   StepLabel,
   Paper,
-  AppBar,
-  Toolbar,
-  IconButton,
 } from '@mui/material';
-import { GitHub } from '@mui/icons-material';
 import YAML from 'js-yaml';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 import { FormData, KubeAgenticAgent } from './types';
+import Header from './components/layout/Header';
+import HeroSection from './components/layout/HeroSection';
+import Footer from './components/layout/Footer';
 import BasicInfoStep from './components/BasicInfoStep';
 import ProviderStep from './components/ProviderStep';
 import FrameworkStep from './components/FrameworkStep';
@@ -32,18 +31,76 @@ const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#1976d2',
+      main: '#42b883',
     },
     secondary: {
-      main: '#dc004e',
+      main: '#2c3e50',
     },
     background: {
-      default: '#f5f5f5',
+      default: '#f8f9fa',
     },
   },
   typography: {
+    fontFamily: '"Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     h4: {
       fontWeight: 600,
+      color: '#2c3e50',
+    },
+    h6: {
+      fontWeight: 600,
+      color: '#2c3e50',
+    },
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: '6px',
+          textTransform: 'none',
+          fontWeight: 500,
+        },
+        contained: {
+          background: 'linear-gradient(135deg, #42b883 0%, #369870 100%)',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          '&:hover': {
+            background: 'linear-gradient(135deg, #369870 0%, #2d7a5f 100%)',
+            transform: 'translateY(-1px)',
+            boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+          },
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          borderRadius: '12px',
+          boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+        },
+      },
+    },
+    MuiStep: {
+      styleOverrides: {
+        root: {
+          '& .MuiStepLabel-label.Mui-active': {
+            color: '#42b883',
+          },
+          '& .MuiStepLabel-label.Mui-completed': {
+            color: '#42b883',
+          },
+        },
+      },
+    },
+    MuiStepIcon: {
+      styleOverrides: {
+        root: {
+          '&.Mui-active': {
+            color: '#42b883',
+          },
+          '&.Mui-completed': {
+            color: '#42b883',
+          },
+        },
+      },
     },
   },
 });
@@ -417,69 +474,51 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar position="static" elevation={0}>
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            KubeAgentic YAML Generator
-          </Typography>
-          <IconButton
-            color="inherit"
-            href="https://yamlgenerator.kubeagentic.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <GitHub />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+      <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+        <Header />
+        <HeroSection />
 
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        <Box sx={{ mb: 4 }}>
-          <Typography variant="h4" component="h1" gutterBottom align="center">
-            Generate KubeAgentic YAML Configuration
-          </Typography>
-          <Typography variant="subtitle1" align="center" color="text.secondary">
-            Create complete production-ready AI agent configurations for Kubernetes deployment
-          </Typography>
-        </Box>
-
-        <Paper sx={{ p: 3, mb: 3 }}>
-          <Stepper activeStep={activeStep} alternativeLabel>
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-        </Paper>
-
-        <Paper sx={{ p: 3 }}>
-          {renderStepContent(activeStep)}
-        </Paper>
-
-        {generatedYAML && (
-          <Paper sx={{ p: 3, mt: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              Generated Complete YAML Configuration
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-              This includes all selected Kubernetes resources for a complete production deployment.
-            </Typography>
-            <Box sx={{ position: 'relative' }}>
-              <SyntaxHighlighter
-                language="yaml"
-                style={tomorrow}
-                customStyle={{
-                  borderRadius: '8px',
-                  fontSize: '14px',
-                }}
-              >
-                {generatedYAML}
-              </SyntaxHighlighter>
-            </Box>
+        <Container maxWidth="lg" sx={{ mt: 6, mb: 6, flex: 1 }}>
+          <Paper sx={{ p: 4, mb: 4 }}>
+            <Stepper activeStep={activeStep} alternativeLabel>
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
           </Paper>
-        )}
-      </Container>
+
+          <Paper sx={{ p: 4 }}>
+            {renderStepContent(activeStep)}
+          </Paper>
+
+          {generatedYAML && (
+            <Paper sx={{ p: 4, mt: 4 }}>
+              <Typography variant="h6" gutterBottom sx={{ color: '#2c3e50' }}>
+                Generated Complete YAML Configuration
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                This includes all selected Kubernetes resources for a complete production deployment.
+              </Typography>
+              <Box sx={{ position: 'relative' }}>
+                <SyntaxHighlighter
+                  language="yaml"
+                  style={tomorrow}
+                  customStyle={{
+                    borderRadius: '8px',
+                    fontSize: '14px',
+                  }}
+                >
+                  {generatedYAML}
+                </SyntaxHighlighter>
+              </Box>
+            </Paper>
+          )}
+        </Container>
+
+        <Footer />
+      </Box>
     </ThemeProvider>
   );
 }
