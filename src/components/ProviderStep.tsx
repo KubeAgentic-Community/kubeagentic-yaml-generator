@@ -24,12 +24,6 @@ interface ProviderStepProps {
   onBack: () => void;
 }
 
-const providerModels = {
-  openai: ['gpt-4', 'gpt-4-turbo', 'gpt-3.5-turbo', 'gpt-3.5-turbo-16k'],
-  claude: ['claude-3-opus', 'claude-3-sonnet', 'claude-3-haiku'],
-  gemini: ['gemini-pro', 'gemini-pro-vision'],
-  vllm: ['custom-model'],
-};
 
 const ProviderStep: React.FC<ProviderStepProps> = ({
   formData,
@@ -38,13 +32,11 @@ const ProviderStep: React.FC<ProviderStepProps> = ({
   onBack,
 }) => {
   const handleProviderChange = (provider: string) => {
-    const models = providerModels[provider as keyof typeof providerModels];
     setFormData({
       ...formData,
       spec: {
         ...formData.spec,
         provider: provider as any,
-        model: models[0],
       },
     });
   };
@@ -120,20 +112,14 @@ const ProviderStep: React.FC<ProviderStepProps> = ({
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <FormControl fullWidth>
-            <InputLabel>Model</InputLabel>
-            <Select
-              value={formData.spec.model}
-              onChange={(e) => handleModelChange(e.target.value)}
-              label="Model"
-            >
-              {providerModels[formData.spec.provider]?.map((model) => (
-                <MenuItem key={model} value={model}>
-                  {model}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <TextField
+            fullWidth
+            label="Model"
+            value={formData.spec.model}
+            onChange={(e) => handleModelChange(e.target.value)}
+            placeholder="gpt-4"
+            helperText="Model name for the selected provider"
+          />
         </Grid>
 
         {formData.spec.provider === 'vllm' && (

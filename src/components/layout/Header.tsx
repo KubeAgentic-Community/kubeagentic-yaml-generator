@@ -14,11 +14,6 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
   boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
 }));
 
-const Logo = styled('img')({
-  height: '40px',
-  marginRight: '16px',
-});
-
 const NavButton = styled(Link)(({ theme }) => ({
   color: 'white',
   marginLeft: theme.spacing(2),
@@ -43,10 +38,6 @@ const Header: React.FC = () => {
       <Container maxWidth="xl">
         <Toolbar>
           <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-            <Logo 
-              src="https://kubeagentic.com/assets/logo.png" 
-              alt="KubeAgentic Logo"
-            />
             <Typography 
               variant="h6" 
               component="div" 
@@ -55,7 +46,7 @@ const Header: React.FC = () => {
                 fontSize: '1.5rem',
               }}
             >
-              KubeAgentic Home
+              YAML Generator for KubeAgentic
             </Typography>
           </Box>
           
@@ -65,42 +56,7 @@ const Header: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Home
-            </NavButton>
-            <NavButton 
-              href="https://kubeagentic.com/direct-framework"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Direct Framework Guide
-            </NavButton>
-            <NavButton 
-              href="https://kubeagentic.com/langgraph-framework"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              LangGraph Framework Guide
-            </NavButton>
-            <NavButton 
-              href="https://kubeagentic.com/api-reference"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              API Reference
-            </NavButton>
-            <NavButton 
-              href="https://kubeagentic.com/examples"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Examples
-            </NavButton>
-            <NavButton 
-              href="https://kubeagentic.com/local-testing"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Local Testing Guide
+              KubeAgentic Home
             </NavButton>
           </Box>
         </Toolbar>

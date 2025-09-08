@@ -4,10 +4,6 @@ import {
   TextField,
   Button,
   Typography,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   Grid,
 } from '@mui/material';
 
@@ -66,21 +62,16 @@ const BasicInfoStep: React.FC<BasicInfoStepProps> = ({
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth>
-            <InputLabel>Namespace</InputLabel>
-            <Select
-              value={formData.metadata.namespace || 'default'}
-              onChange={(e) =>
-                handleChange('metadata', { namespace: e.target.value })
-              }
-              label="Namespace"
-            >
-              <MenuItem value="default">default</MenuItem>
-              <MenuItem value="kube-system">kube-system</MenuItem>
-              <MenuItem value="production">production</MenuItem>
-              <MenuItem value="staging">staging</MenuItem>
-            </Select>
-          </FormControl>
+          <TextField
+            fullWidth
+            label="Namespace"
+            value={formData.metadata.namespace || 'default'}
+            onChange={(e) =>
+              handleChange('metadata', { namespace: e.target.value })
+            }
+            placeholder="default"
+            helperText="Kubernetes namespace for the agent"
+          />
         </Grid>
         <Grid item xs={12}>
           <TextField
